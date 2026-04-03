@@ -421,11 +421,7 @@ class KernelBuilder:
                 body.append(("valu", ("<", mask_vec, idx_vec, n_nodes_vec)))
                 body.append(("flow", ("vselect", idx_vec, mask_vec, idx_vec, zero_vec)))
 
-            # Store updated indices and values back (contiguous) using vstore
-            body.append(("alu", ("+", tmp_addr, self.scratch["inp_indices_p"], i_const)))
             body.append(("store", ("vstore", tmp_addr, idx_vec)))
-
-            body.append(("alu", ("+", tmp_addr2, self.scratch["inp_values_p"], i_const)))
             body.append(("store", ("vstore", tmp_addr2, val_vec)))
 
             # Tail scalar fallback for remaining elements
